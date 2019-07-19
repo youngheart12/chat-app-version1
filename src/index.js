@@ -3,14 +3,16 @@ const http = require('http')
 const express = require('express')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
+const siofu = require("socketio-file-upload");
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
 
 const app = express()
+app.use(siofu.router)
 const server = http.createServer(app)
 const io = socketio(server)
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
@@ -35,7 +37,7 @@ io.on('connection', (socket) => {
         })
         callback()
     })
-
+   
     socket.on('sendMessage', (message, callback) => {
         const user=getUser(socket.id)
         const filter = new Filter()
@@ -52,6 +54,10 @@ io.on('connection', (socket) => {
         const user=getUser(socket.id)
         io.to(user.room).emit('locationMessage', generateLocationMessage(user.username,`https://google.com/maps?q=${coords.latitude},${coords.longitude}`))
         callback()
+    })
+    socket.on('sendExperimentData',(data)=>{
+        const user=getUser(socket.id)
+        io.to(user.room).emit('message',generateMessage(user.username,data.image))
     })
 
     socket.on('disconnect', () => {

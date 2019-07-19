@@ -63,7 +63,6 @@ button:disabled {
     width: 100vw;
     height: 100vh;   
     display: flex;
-    
     justify-content: center;
     align-items: center;
 }
@@ -71,13 +70,12 @@ button:disabled {
 .centered-form__box {
     box-shadow: 0px 0px 17px 1px #1D1F26;
     background: #F7F7FA;
-    padding: 28px;
-    width: 300px;
+    padding: 24px;
+    width: 250px;
 }
 
 .centered-form button {
     width: 100%;
-    background-color: mediumseagreen;
 }
 
 .centered-form input {
@@ -179,7 +177,17 @@ button:disabled {
 }
 
 .users {
-    list-style-type: none;
+    list-style:none;
     font-weight: 300;
     padding: 12px 24px 0 24px;
+}
+ul li::before{
+    content:"\2022";
+    color:mediumseagreen;
+    display: inline-block;
+    width: 1em;;
+    font-size: 16px;
+}
+.badge{
+    padding: 50px;
 }

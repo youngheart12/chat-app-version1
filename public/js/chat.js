@@ -5,12 +5,16 @@ const $messageForm = document.querySelector('#message-form')
 const $messageFormInput = $messageForm.querySelector('input')
 const $messageFormButton = $messageForm.querySelector('button')
 const $sendLocationButton = document.querySelector('#send-location')
+const $sendExperiment=document.querySelector('#experiment')
 const $messages = document.querySelector('#messages')
 
 // Templates
+
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
 const sidebarTemplate=document.querySelector('#sidebar-template').innerHTML
+
+
 // Options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 const autoScroll=()=>{
@@ -109,4 +113,10 @@ socket.emit('join', { username, room }, (error) => {
         alert(error)
         location.href = '/'
     }
+})
+
+$sendExperiment.addEventListener('click',()=>{
+    socket.emit("sendExperimentData",{
+        image:"Feature will be added soon"
+    })
 })
